@@ -7,13 +7,30 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		01490E5F1C434C510038DD29 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01490E5E1C434C510038DD29 /* AppDelegate.swift */; };
-		01490E611C434C510038DD29 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01490E601C434C510038DD29 /* ViewController.swift */; };
-		01490E641C434C510038DD29 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 01490E621C434C510038DD29 /* Main.storyboard */; };
-		01490E671C434C510038DD29 /* RecordEverything.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 01490E651C434C510038DD29 /* RecordEverything.xcdatamodeld */; };
+		014361101C43503B00356B73 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 0143610E1C43503B00356B73 /* Main.storyboard */; };
+		014361131C435C8000356B73 /* RecordEverything.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 014361111C435C8000356B73 /* RecordEverything.xcdatamodeld */; };
 		01490E691C434C510038DD29 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 01490E681C434C510038DD29 /* Assets.xcassets */; };
 		01490E6C1C434C510038DD29 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 01490E6A1C434C510038DD29 /* LaunchScreen.storyboard */; };
 		01490E771C434C510038DD29 /* RecordEverythingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01490E761C434C510038DD29 /* RecordEverythingTests.swift */; };
+		018641451C434D3F00A18B6C /* AdditionalClasses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 018641421C434D3F00A18B6C /* AdditionalClasses.swift */; };
+		018641461C434D3F00A18B6C /* AppConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 018641431C434D3F00A18B6C /* AppConstants.swift */; };
+		018641471C434D3F00A18B6C /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 018641441C434D3F00A18B6C /* AppDelegate.swift */; };
+		018641491C434D4700A18B6C /* EnergyLevel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 018641481C434D4700A18B6C /* EnergyLevel.swift */; };
+		018641541C434D5B00A18B6C /* MainViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0186414A1C434D5B00A18B6C /* MainViewController.swift */; };
+		018641551C434D5B00A18B6C /* Meal.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0186414B1C434D5B00A18B6C /* Meal.swift */; };
+		018641561C434D5B00A18B6C /* MealDateViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0186414C1C434D5B00A18B6C /* MealDateViewController.swift */; };
+		018641571C434D5B00A18B6C /* MealNameViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0186414D1C434D5B00A18B6C /* MealNameViewController.swift */; };
+		018641581C434D5B00A18B6C /* MealPhotoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0186414E1C434D5B00A18B6C /* MealPhotoViewController.swift */; };
+		018641591C434D5B00A18B6C /* MealTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0186414F1C434D5B00A18B6C /* MealTableViewCell.swift */; };
+		0186415A1C434D5B00A18B6C /* MealTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 018641501C434D5B00A18B6C /* MealTableViewController.swift */; };
+		0186415B1C434D5B00A18B6C /* Rating.swift in Sources */ = {isa = PBXBuildFile; fileRef = 018641511C434D5B00A18B6C /* Rating.swift */; };
+		0186415C1C434D5B00A18B6C /* RatingControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 018641521C434D5B00A18B6C /* RatingControl.swift */; };
+		0186415D1C434D5B00A18B6C /* RatingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 018641531C434D5B00A18B6C /* RatingViewController.swift */; };
+		01A3541F1C436F730071A18B /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01A3541E1C436F730071A18B /* LoginViewController.swift */; };
+		01BBFE051C474B0C0024E611 /* LoginService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01BBFE041C474B0C0024E611 /* LoginService.swift */; };
+		01BBFE091C4750820024E611 /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01BBFE081C4750820024E611 /* SignUpViewController.swift */; };
+		01D16DAB1C5084150054CDF3 /* NSMutableURLExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 01D16DAA1C5084150054CDF3 /* NSMutableURLExtensions.swift */; };
+		9A9D6A3B2E88B6586EAFECE2 /* Pods_RecordEverything.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 943C1CCAA9B16565FFF7826B /* Pods_RecordEverything.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -27,17 +44,37 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0143610F1C43503B00356B73 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		014361121C435C8000356B73 /* LocalDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = LocalDataModel.xcdatamodel; sourceTree = "<group>"; };
 		01490E5B1C434C510038DD29 /* RecordEverything.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = RecordEverything.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		01490E5E1C434C510038DD29 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		01490E601C434C510038DD29 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
-		01490E631C434C510038DD29 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		01490E661C434C510038DD29 /* RecordEverything.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = RecordEverything.xcdatamodel; sourceTree = "<group>"; };
 		01490E681C434C510038DD29 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		01490E6B1C434C510038DD29 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		01490E6D1C434C510038DD29 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		01490E721C434C510038DD29 /* RecordEverythingTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = RecordEverythingTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		01490E761C434C510038DD29 /* RecordEverythingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordEverythingTests.swift; sourceTree = "<group>"; };
 		01490E781C434C510038DD29 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		018641421C434D3F00A18B6C /* AdditionalClasses.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AdditionalClasses.swift; sourceTree = "<group>"; };
+		018641431C434D3F00A18B6C /* AppConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppConstants.swift; sourceTree = "<group>"; };
+		018641441C434D3F00A18B6C /* AppDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		018641481C434D4700A18B6C /* EnergyLevel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EnergyLevel.swift; sourceTree = "<group>"; };
+		0186414A1C434D5B00A18B6C /* MainViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MainViewController.swift; sourceTree = "<group>"; };
+		0186414B1C434D5B00A18B6C /* Meal.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Meal.swift; sourceTree = "<group>"; };
+		0186414C1C434D5B00A18B6C /* MealDateViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MealDateViewController.swift; sourceTree = "<group>"; };
+		0186414D1C434D5B00A18B6C /* MealNameViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MealNameViewController.swift; sourceTree = "<group>"; };
+		0186414E1C434D5B00A18B6C /* MealPhotoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MealPhotoViewController.swift; sourceTree = "<group>"; };
+		0186414F1C434D5B00A18B6C /* MealTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MealTableViewCell.swift; sourceTree = "<group>"; };
+		018641501C434D5B00A18B6C /* MealTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MealTableViewController.swift; sourceTree = "<group>"; };
+		018641511C434D5B00A18B6C /* Rating.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Rating.swift; sourceTree = "<group>"; };
+		018641521C434D5B00A18B6C /* RatingControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RatingControl.swift; sourceTree = "<group>"; };
+		018641531C434D5B00A18B6C /* RatingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RatingViewController.swift; sourceTree = "<group>"; };
+		0186415E1C434D9B00A18B6C /* RecordEverything-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "RecordEverything-Bridging-Header.h"; sourceTree = "<group>"; };
+		01A3541E1C436F730071A18B /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		01BBFE041C474B0C0024E611 /* LoginService.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginService.swift; sourceTree = "<group>"; };
+		01BBFE081C4750820024E611 /* SignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
+		01D16DAA1C5084150054CDF3 /* NSMutableURLExtensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NSMutableURLExtensions.swift; sourceTree = "<group>"; };
+		0C2E9B2343BBD0ABBD1B05F1 /* Pods-RecordEverything.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RecordEverything.release.xcconfig"; path = "Pods/Target Support Files/Pods-RecordEverything/Pods-RecordEverything.release.xcconfig"; sourceTree = "<group>"; };
+		5D889B731CF47169F1E5643D /* Pods-RecordEverything.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-RecordEverything.debug.xcconfig"; path = "Pods/Target Support Files/Pods-RecordEverything/Pods-RecordEverything.debug.xcconfig"; sourceTree = "<group>"; };
+		943C1CCAA9B16565FFF7826B /* Pods_RecordEverything.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_RecordEverything.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -45,6 +82,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9A9D6A3B2E88B6586EAFECE2 /* Pods_RecordEverything.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -64,6 +102,8 @@
 				01490E5D1C434C510038DD29 /* RecordEverything */,
 				01490E751C434C510038DD29 /* RecordEverythingTests */,
 				01490E5C1C434C510038DD29 /* Products */,
+				34A530EC325C1EDF8B3C2CFB /* Pods */,
+				6DC5DE3BEC23B54886F9E437 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -79,13 +119,30 @@
 		01490E5D1C434C510038DD29 /* RecordEverything */ = {
 			isa = PBXGroup;
 			children = (
-				01490E5E1C434C510038DD29 /* AppDelegate.swift */,
-				01490E601C434C510038DD29 /* ViewController.swift */,
-				01490E621C434C510038DD29 /* Main.storyboard */,
 				01490E681C434C510038DD29 /* Assets.xcassets */,
+				014361111C435C8000356B73 /* RecordEverything.xcdatamodeld */,
+				018641421C434D3F00A18B6C /* AdditionalClasses.swift */,
+				018641431C434D3F00A18B6C /* AppConstants.swift */,
+				018641441C434D3F00A18B6C /* AppDelegate.swift */,
+				018641481C434D4700A18B6C /* EnergyLevel.swift */,
+				0186414A1C434D5B00A18B6C /* MainViewController.swift */,
+				0186414B1C434D5B00A18B6C /* Meal.swift */,
+				0186414C1C434D5B00A18B6C /* MealDateViewController.swift */,
+				0186414D1C434D5B00A18B6C /* MealNameViewController.swift */,
+				01A3541E1C436F730071A18B /* LoginViewController.swift */,
+				0186414E1C434D5B00A18B6C /* MealPhotoViewController.swift */,
+				0186414F1C434D5B00A18B6C /* MealTableViewCell.swift */,
+				018641501C434D5B00A18B6C /* MealTableViewController.swift */,
+				018641511C434D5B00A18B6C /* Rating.swift */,
+				018641521C434D5B00A18B6C /* RatingControl.swift */,
+				018641531C434D5B00A18B6C /* RatingViewController.swift */,
+				0186415E1C434D9B00A18B6C /* RecordEverything-Bridging-Header.h */,
 				01490E6A1C434C510038DD29 /* LaunchScreen.storyboard */,
+				0143610E1C43503B00356B73 /* Main.storyboard */,
+				01BBFE081C4750820024E611 /* SignUpViewController.swift */,
+				01D16DAA1C5084150054CDF3 /* NSMutableURLExtensions.swift */,
+				01BBFE041C474B0C0024E611 /* LoginService.swift */,
 				01490E6D1C434C510038DD29 /* Info.plist */,
-				01490E651C434C510038DD29 /* RecordEverything.xcdatamodeld */,
 			);
 			path = RecordEverything;
 			sourceTree = "<group>";
@@ -99,6 +156,23 @@
 			path = RecordEverythingTests;
 			sourceTree = "<group>";
 		};
+		34A530EC325C1EDF8B3C2CFB /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				5D889B731CF47169F1E5643D /* Pods-RecordEverything.debug.xcconfig */,
+				0C2E9B2343BBD0ABBD1B05F1 /* Pods-RecordEverything.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		6DC5DE3BEC23B54886F9E437 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				943C1CCAA9B16565FFF7826B /* Pods_RecordEverything.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -106,9 +180,12 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 01490E7B1C434C510038DD29 /* Build configuration list for PBXNativeTarget "RecordEverything" */;
 			buildPhases = (
+				95A5AA290AFB0B1538EE2245 /* Check Pods Manifest.lock */,
 				01490E571C434C510038DD29 /* Sources */,
 				01490E581C434C510038DD29 /* Frameworks */,
 				01490E591C434C510038DD29 /* Resources */,
+				CA941CCA1B58F7727B5CEDB5 /* Embed Pods Frameworks */,
+				850ED474E74CB5F7A1747942 /* Copy Pods Resources */,
 			);
 			buildRules = (
 			);
@@ -182,9 +259,9 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				014361101C43503B00356B73 /* Main.storyboard in Resources */,
 				01490E6C1C434C510038DD29 /* LaunchScreen.storyboard in Resources */,
 				01490E691C434C510038DD29 /* Assets.xcassets in Resources */,
-				01490E641C434C510038DD29 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -197,14 +274,78 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		850ED474E74CB5F7A1747942 /* Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-RecordEverything/Pods-RecordEverything-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		95A5AA290AFB0B1538EE2245 /* Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		CA941CCA1B58F7727B5CEDB5 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-RecordEverything/Pods-RecordEverything-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		01490E571C434C510038DD29 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				01490E611C434C510038DD29 /* ViewController.swift in Sources */,
-				01490E671C434C510038DD29 /* RecordEverything.xcdatamodeld in Sources */,
-				01490E5F1C434C510038DD29 /* AppDelegate.swift in Sources */,
+				01BBFE051C474B0C0024E611 /* LoginService.swift in Sources */,
+				0186415C1C434D5B00A18B6C /* RatingControl.swift in Sources */,
+				014361131C435C8000356B73 /* RecordEverything.xcdatamodeld in Sources */,
+				018641471C434D3F00A18B6C /* AppDelegate.swift in Sources */,
+				018641591C434D5B00A18B6C /* MealTableViewCell.swift in Sources */,
+				018641551C434D5B00A18B6C /* Meal.swift in Sources */,
+				018641571C434D5B00A18B6C /* MealNameViewController.swift in Sources */,
+				01BBFE091C4750820024E611 /* SignUpViewController.swift in Sources */,
+				0186415D1C434D5B00A18B6C /* RatingViewController.swift in Sources */,
+				018641561C434D5B00A18B6C /* MealDateViewController.swift in Sources */,
+				018641461C434D3F00A18B6C /* AppConstants.swift in Sources */,
+				018641541C434D5B00A18B6C /* MainViewController.swift in Sources */,
+				018641451C434D3F00A18B6C /* AdditionalClasses.swift in Sources */,
+				01A3541F1C436F730071A18B /* LoginViewController.swift in Sources */,
+				01D16DAB1C5084150054CDF3 /* NSMutableURLExtensions.swift in Sources */,
+				018641581C434D5B00A18B6C /* MealPhotoViewController.swift in Sources */,
+				0186415A1C434D5B00A18B6C /* MealTableViewController.swift in Sources */,
+				018641491C434D4700A18B6C /* EnergyLevel.swift in Sources */,
+				0186415B1C434D5B00A18B6C /* Rating.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -227,10 +368,10 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		01490E621C434C510038DD29 /* Main.storyboard */ = {
+		0143610E1C43503B00356B73 /* Main.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
-				01490E631C434C510038DD29 /* Base */,
+				0143610F1C43503B00356B73 /* Base */,
 			);
 			name = Main.storyboard;
 			sourceTree = "<group>";
@@ -331,23 +472,30 @@
 		};
 		01490E7C1C434C510038DD29 /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5D889B731CF47169F1E5643D /* Pods-RecordEverything.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = RecordEverything/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.example.RecordEverything;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "RecordEverything/RecordEverything-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
 		01490E7D1C434C510038DD29 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = 0C2E9B2343BBD0ABBD1B05F1 /* Pods-RecordEverything.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = RecordEverything/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.example.RecordEverything;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "RecordEverything/RecordEverything-Bridging-Header.h";
 			};
 			name = Release;
 		};
@@ -394,6 +542,7 @@
 				01490E7D1C434C510038DD29 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		01490E7E1C434C510038DD29 /* Build configuration list for PBXNativeTarget "RecordEverythingTests" */ = {
 			isa = XCConfigurationList;
@@ -402,16 +551,17 @@
 				01490E801C434C510038DD29 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
 /* Begin XCVersionGroup section */
-		01490E651C434C510038DD29 /* RecordEverything.xcdatamodeld */ = {
+		014361111C435C8000356B73 /* RecordEverything.xcdatamodeld */ = {
 			isa = XCVersionGroup;
 			children = (
-				01490E661C434C510038DD29 /* RecordEverything.xcdatamodel */,
+				014361121C435C8000356B73 /* LocalDataModel.xcdatamodel */,
 			);
-			currentVersion = 01490E661C434C510038DD29 /* RecordEverything.xcdatamodel */;
+			currentVersion = 014361121C435C8000356B73 /* LocalDataModel.xcdatamodel */;
 			path = RecordEverything.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
