@@ -19,17 +19,12 @@ class MealDateViewController: UIViewController, UINavigationControllerDelegate {
 
 
     @IBOutlet weak var datePicker: UIDatePicker!
-    @IBOutlet weak var nextButton: UIBarButtonItem!
     
-    var meal: Meal?
+    var dateCallback: ((NSDate)->())?
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         resetDate()
-        if let meal = meal {
-            navigationItem.title = meal.name
-        }
     }
     
     @IBAction func unwindBackToDate(sender: UIStoryboardSegue) {
@@ -40,21 +35,19 @@ class MealDateViewController: UIViewController, UINavigationControllerDelegate {
         datePicker.date = Utils.roundDateToNearest10Min(NSDate())
     }
 
-    
-    func clearMeal() {
-        meal = nil
-        resetDate()
+    @IBAction func selectDate(sender: UIButton) {
+        if let dateCallback = dateCallback {
+            dateCallback(datePicker.date)
+            dismissViewControllerAnimated(true, completion: nil)
+        }
     }
     
-    // This method lets you configure a view controller before it's presented.
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if nextButton === sender {
-            let date = datePicker.date
-            meal!.date = date
-            if let photoViewController = segue.destinationViewController as? MealPhotoViewController {
-                photoViewController.meal = meal
-            }
-        }
+    @IBAction func cancelSelectDate(sender: AnyObject) {
+        resetDate()
+        dismissViewControllerAnimated(true, completion: nil)
+    }
+    func clearMeal() {
+        resetDate()
     }
     
     

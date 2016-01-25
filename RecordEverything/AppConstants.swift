@@ -15,6 +15,8 @@ public struct AppConstants {
     static var apiBaseUrl = "http://localhost:8080/api/"
     //static var apiBaseUrl = "http://alfad8.csail.mit.edu:8080/api"
     
+    static let mealBasesRoute = "meal_bases"
+    
     public static func apiURLWithPathComponents(components: String) -> NSURL {
         let baseUrl = NSURL(string: AppConstants.apiBaseUrl)
         let APIUrl = NSURL(string: components, relativeToURL: baseUrl)!

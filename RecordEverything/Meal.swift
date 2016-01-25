@@ -16,10 +16,6 @@ import Alamofire
 class Meal: NSObject, Mappable {
     // MARK: Properties
     
-    //TODO: Use Alamofire default authorization stuff
-    //expand add meals back to 2 or 3 parts
-    //change rating text to "How energetic are you feeling right now?"
-    
     var name: String
     var type: String
     var photo: UIImage?
@@ -27,11 +23,8 @@ class Meal: NSObject, Mappable {
     var date: NSDate
     var filename = ""
     
-//    let _baseURL = AppConstants.apiBaseURL
     let mealRoute = AppConstants.apiURLWithPathComponents("meal")
     let mealsRoute = AppConstants.apiURLWithPathComponents("meals")
-//    let mealRoute = "api/"+AppConstants.username+"/meal"
-//    let mealsRoute = "api/"+AppConstants.username+"/meals"
 
     // MARK: Archiving Paths
     

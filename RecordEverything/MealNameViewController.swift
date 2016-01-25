@@ -7,52 +7,123 @@ import CoreData
 import Alamofire
 import SwiftyJSON
 
-//TODO: add user log in screen and user code
-//use 3 view controllers again instead of one
-//use core data instead of files for meals
+//TODO:
+//Add option for selecting date and photo modally, instead of requiring it
+//Fix layouts and add stuff to save everything properly
 //add reminders
 //add something for sleep (reminder when you go to bed, reminder in morning, save length of sleep, whether it took a long time to fall asleep, whether feel rested or not in morning)
 //add something for bowel movement (rating for watery->hard scale, length of time it took, date when it happened, photo)
 //add class for creating meal with ingredients, ability to select a meal class with those ingredients, plus modifications, and ability to select quantity of meal
-class MealNameViewController: UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource, UINavigationControllerDelegate, UIPickerViewDelegate, UIPickerViewDataSource  {
+
+
+
+class MealNameViewController: UIViewController, UITextFieldDelegate, UITableViewDelegate, UITableViewDataSource, UINavigationControllerDelegate, UIPickerViewDelegate, UIPickerViewDataSource, UIImagePickerControllerDelegate  {
     static let DocumentsDirectory = NSFileManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).first!
     static let pastMealsServerRoute = AppConstants.apiURLWithPathComponents("past_meals")
     // MARK: Properties
     
-    @IBOutlet weak var nameTextField: UITextField!
-    //@IBOutlet weak var ratingControl: RatingControl!
-    @IBOutlet weak var nextButton: UIBarButtonItem!
+    //@IBOutlet weak var nameTextField: UITextField!
+    @IBOutlet weak var saveButton: UIBarButtonItem!
     @IBOutlet weak var mealTypePicker: UIPickerView!
-    @IBOutlet weak var autoCompleteTable: UITableView!
-    //@IBOutlet weak var datePicker: UIDatePicker!
-    //@IBOutlet weak var photoImageView: UIImageView!
-    /*
-        This value is either passed by `MealTableViewController` in `prepareForSegue(_:sender:)`
-        or constructed as part of adding a new meal.
-    */
+    //@IBOutlet weak var autoCompleteTable: UITableView!
+    @IBOutlet weak var ingredientsLabel: UILabel!
+    @IBOutlet weak var cookingMethodLabel: UILabel!
+    @IBOutlet weak var cookingMethodText: UILabel!
+    @IBOutlet weak var photoImageView: UIImageView!
+    @IBOutlet weak var selectPhotoButton: UIButton!
+    @IBOutlet weak var dateLabel: UILabel!
+    @IBOutlet weak var ingredientsText: UILabel!
+    @IBOutlet weak var setDifferentTimeButton: UIButton!
     var meal: Meal?
+    @IBOutlet weak var selectDifferentMeal: UIButton!
+    @IBOutlet weak var selectMeal: UIButton!
+    
+    var mealBase: MealBase?
     var unsavedMeals = [Meal]()
-    
-    //var nonDefaultPhoto = false
-    
     var mealTypePickerDataSource = ["Breakfast","Lunch","Dinner","Snack","Dessert"]
     var mealType :String?
-    
     var autoCompleteMeals = [String]()
-
     var pastMeals = [String:[String:Int]]()
+    var date = Utils.roundDateToNearest10Min(NSDate()) {
+        didSet {
+            setDifferentTimeButton.setTitle(dateFormatter(date) + " >",forState: .Normal)
+        }
+    }
+    var cookingMethod = "" {
+        didSet {
+            if cookingMethod != "" {
+                cookingMethodText.text = cookingMethod
+            }
+        }
+    }
+    var ingredients = [String]() {
+        didSet {
+            if ingredients.count > 0 {
+                ingredientsText.text = convertIngredientsArrayToString(ingredients)
+            }
+        }
+    }
 
+    var nonDefaultPhoto = false
+
+    func dateSetter(date:NSDate) {
+        self.date = date
+    }
+    
+    func dateFormatter(date: NSDate) -> String {
+        let formatter = NSDateFormatter()
+        formatter.dateStyle = NSDateFormatterStyle.ShortStyle
+        formatter.timeStyle = NSDateFormatterStyle.MediumStyle
+        return formatter.stringFromDate(date)
+    }
+    func setLabelsToShowState() {
+        selectMeal.hidden = true
+        selectDifferentMeal.hidden = false
+        ingredientsLabel.hidden = false
+        ingredientsText.hidden = false
+        cookingMethodLabel.hidden = false
+        cookingMethodText.hidden = false
+    }
+    func setLabelsToClearedState() {
+        selectMeal.hidden = false
+        selectDifferentMeal.hidden = true
+        ingredientsLabel.hidden = true
+        ingredientsText.hidden = true
+        cookingMethodLabel.hidden = true
+        cookingMethodText.hidden = true
+    }
+    
+    func setMealBaseVariable(mealBase:MealBase) {
+        self.mealBase = mealBase
+        navigationItem.title = mealBase.name
+        self.cookingMethod = mealBase.cookingMethod[0]
+        self.ingredients = mealBase.ingredients
+        setLabelsToShowState()
+    }
+    func convertIngredientsArrayToString(ingredients:[String])->String {
+        var ingredientsString = ""
+        for (index,ingredient) in ingredients.enumerate() {
+            ingredientsString += "\(ingredient)"
+            if index < ingredients.count-1 {
+                ingredientsString += ", "
+            }
+        }
+        return ingredientsString
+    }
     
     @IBAction func unwindCancel(sender: UIStoryboardSegue) {
         clearMeal()
-//        if let dateViewController = sender.sourceViewController as? MealDateViewController {
-//            dateViewController.clearMeal()
-//        }
-//        else if let photoViewController = sender.sourceViewController as? MealPhotoViewController {
-//            photoViewController.clearMeal()
-//        }
         let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+
         let initViewController: UIViewController = storyboard.instantiateViewControllerWithIdentifier("Main") as UIViewController
+        let navController = UINavigationController(rootViewController: initViewController)
+        self.presentViewController(navController, animated:true, completion: nil)
+    }
+    @IBAction func selectMealBase(sender: AnyObject) {
+        let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+        
+        let initViewController: MealBaseTableViewController = storyboard.instantiateViewControllerWithIdentifier("SelectMealBase") as! MealBaseTableViewController
+        initViewController.mealBaseCallback = setMealBaseVariable
         let navController = UINavigationController(rootViewController: initViewController)
         self.presentViewController(navController, animated:true, completion: nil)
     }
@@ -63,24 +134,9 @@ class MealNameViewController: UIViewController, UITextFieldDelegate, UITableView
     @IBAction func save(sender: UIStoryboardSegue) {
 
         
-        let name = nameTextField.text ?? ""
-        //let date = datePicker.date
-        
-//        var photo: UIImage?
-//        if nonDefaultPhoto {
-//            photo = photoImageView.image
-//        } else {
-//            photo = nil
-//        }
+        let name = mealBase!.name//nameTextField.text ?? ""
 
         let currentMealType = mealType!
-        
-        //meal = Meal(name: name, type: currentMealType, photo: photo, rating: 0, date:date)
-        if let photoViewController = sender.sourceViewController as? MealPhotoViewController {
-            meal = photoViewController.meal
-        } else {
-            return
-        }
         
         
         let mealsToSave = unsavedMeals + [meal!]
@@ -116,11 +172,6 @@ class MealNameViewController: UIViewController, UITextFieldDelegate, UITableView
             })
         }
         self.performSegueWithIdentifier("unwindRecordMeal",sender:self)
-//        //TODO: for some reason this goes to main view but then back to add meal
-//        let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-//        let initViewController: UIViewController = storyboard.instantiateViewControllerWithIdentifier("Main") as UIViewController
-//        let navController = UINavigationController(rootViewController: initViewController)
-//        self.presentViewController(navController, animated:true, completion: nil)
     }
     
     func loadUnsavedMealsFromDisk() {
@@ -149,41 +200,32 @@ class MealNameViewController: UIViewController, UITextFieldDelegate, UITableView
         super.viewDidLoad()
         
         // Handle the text field’s user input through delegate callbacks.
-        nameTextField.delegate = self
+        //nameTextField.delegate = self
         mealTypePicker.delegate = self
         mealTypePicker.dataSource = self
-        autoCompleteTable.delegate = self
-        autoCompleteTable.dataSource = self
+        //autoCompleteTable.delegate = self
+        //autoCompleteTable.dataSource = self
         mealType = mealTypePickerDataSource[0]
         
-        autoCompleteTable.scrollEnabled = true
-        autoCompleteTable.hidden = true
-        //nonDefaultPhoto = false
-        self.view.addSubview(autoCompleteTable)
+        //autoCompleteTable.scrollEnabled = true
+        //autoCompleteTable.hidden = true
+        //self.view.addSubview(autoCompleteTable)
+        nonDefaultPhoto = false
         
-        //resetDate()
+        date = Utils.roundDateToNearest10Min(NSDate())
+
+        
+        setLabelsToClearedState()
+
         
         loadUnsavedMealsFromDisk()
         loadPastMealsFromServer()
         
-//        // Set up views if editing an existing Meal.
-//        if let meal = meal {
-//            navigationItem.title = meal.name
-//            mealTypePicker.selectRow(mealTypePickerDataSource.indexOf(meal.type)!,inComponent:0,animated:false)
-//            mealType = meal.type
-//            nameTextField.text   = meal.name
-//            //ratingControl.rating = meal.rating
-//        } else {
-//            mealType = mealTypePickerDataSource[mealTypePicker.selectedRowInComponent(0)]
-//        }
         
         // Enable the Save button only if the text field has a valid Meal name.
         checkValidMealName()
     }
-    
-//    @IBAction func resetDate() {
-//        datePicker.date = Utils.roundDateToNearest10Min(NSDate())
-//    }
+
     
     // MARK: UITextFieldDelegate
     
@@ -200,7 +242,7 @@ class MealNameViewController: UIViewController, UITextFieldDelegate, UITableView
 
     func textFieldDidBeginEditing(textField: UITextField) {
         // Disable the Save button while editing.
-        nextButton.enabled = false
+        saveButton.enabled = false
     }
     
     func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
@@ -228,13 +270,9 @@ class MealNameViewController: UIViewController, UITextFieldDelegate, UITableView
                     valuesToSort[$0.0] > valuesToSort[$1.0]
                 })
                 autoCompleteMeals = autoCompleteMealPairs.map( { $0.1 } )
-                autoCompleteTable.reloadData()
+                //autoCompleteTable.reloadData()
                 
-                autoCompleteTable.hidden = false
-                
-                // print("substring", substring)
-                // print("pastMeals", pastMeals)
-                // print("autocomplete:", autoCompleteMeals)
+                //autoCompleteTable.hidden = false
             }
         }
     }
@@ -261,15 +299,15 @@ class MealNameViewController: UIViewController, UITextFieldDelegate, UITableView
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         let selectedCell = tableView.cellForRowAtIndexPath(indexPath)
-        nameTextField.text = selectedCell!.textLabel!.text;
-        nameTextField.resignFirstResponder()
-        autoCompleteTable.hidden = true
+        //nameTextField.text = selectedCell!.textLabel!.text;
+        //nameTextField.resignFirstResponder()
+        //autoCompleteTable.hidden = true
     }
     
     func checkValidMealName() {
         // Disable the Save button if the text field is empty.
-        let text = nameTextField.text ?? ""
-        nextButton.enabled = !text.isEmpty
+        //let text = nameTextField.text ?? ""
+        //saveButton.enabled = !text.isEmpty
     }
 
     
@@ -294,12 +332,9 @@ class MealNameViewController: UIViewController, UITextFieldDelegate, UITableView
     func clearMeal() {
         meal = nil
         navigationItem.title = "New Meal"
-        nameTextField.text = ""
-        //ratingControl.rating = 0
-        //resetDate()
-        //nonDefaultPhoto = false
-        //photoImageView.image = UIImage(named:"defaultPhoto")
-        
+        //nameTextField.text = ""
+        photoImageView.image = UIImage(named:"defaultPhoto")
+        setLabelsToClearedState()
     }
     
     
@@ -533,30 +568,92 @@ class MealNameViewController: UIViewController, UITextFieldDelegate, UITableView
 
     
     @IBAction func cancel(sender: UIBarButtonItem) {
-        // Depending on style of presentation (modal or push presentation), this view controller needs to be dismissed in two different ways.
-        
         meal = nil
         clearMeal()
     }
     
     // This method lets you configure a view controller before it's presented.
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        nameTextField.resignFirstResponder()
-        if nextButton === sender {
-            let name = nameTextField.text ?? ""
-            //let rating = ratingControl.rating
-            //let date = datePicker.date
-            
-            
-            // Set the meal to be passed to MealDateViewController after the "next" segue.
-            meal = Meal(name: name, type: mealType!, photo: nil, rating: 0, date:nil)
-            
+        //nameTextField.resignFirstResponder()
+//        if saveButton === sender {
+//            let name = mealBase!.name//nameTextField.text ?? ""
+//            
+//            // Set the meal to be passed to MealDateViewController after the "next" segue.
+//            meal = Meal(name: name, type: mealType!, photo: nil, rating: 0, date:nil)
+//            
+//            if let dateViewController = segue.destinationViewController as? MealDateViewController {
+//                dateViewController.meal = meal
+//            }
+//        }
+        if setDifferentTimeButton === sender {
             if let dateViewController = segue.destinationViewController as? MealDateViewController {
-                dateViewController.meal = meal
+                dateViewController.dateCallback = dateSetter
             }
         }
     }
     
 
+    
+    func imagePickerControllerDidCancel(picker: UIImagePickerController) {
+        // Dismiss the picker if the user canceled.
+        dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+        // The info dictionary contains multiple representations of the image, and this uses the original.
+        let selectedImage = info[UIImagePickerControllerOriginalImage] as! UIImage
+        
+        // Set photoImageView to display the selected image.
+        photoImageView.image = selectedImage
+        nonDefaultPhoto = true
+        if meal != nil {
+            meal!.photo = photoImageView.image
+        } else {
+            meal = Meal(name:"", type:"", photo:photoImageView.image,rating:0,date:nil)
+        }
+        
+        // Dismiss the picker.
+        dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    func selectImageFromPhotoLibrary(){
+        // UIImagePickerController is a view controller that lets a user pick media from their photo library.
+        let imagePickerController = UIImagePickerController()
+        
+        if UIImagePickerController.availableCaptureModesForCameraDevice(.Rear) != nil {
+            imagePickerController.allowsEditing = false
+            imagePickerController.sourceType = .Camera
+            imagePickerController.cameraCaptureMode = .Photo
+            imagePickerController.modalPresentationStyle = .FullScreen
+            
+            
+            // Make sure ViewController is notified when the user picks an image.
+            imagePickerController.delegate = self
+            
+            presentViewController(imagePickerController, animated: true, completion: nil)
+        } else {
+            noCamera()
+        }
+    }
+
+    @IBAction func photoPressed(sender: UITapGestureRecognizer) {
+        selectImageFromPhotoLibrary()
+
+    }
+    
+    func noCamera(){
+        let alertVC = UIAlertController(
+            title: "No Camera",
+            message: "Sorry, this device has no camera",
+            preferredStyle: .Alert)
+        let okAction = UIAlertAction(
+            title: "OK",
+            style:.Default,
+            handler: nil)
+        alertVC.addAction(okAction)
+        presentViewController(alertVC,
+            animated: true,
+            completion: nil)
+    }
 
 }

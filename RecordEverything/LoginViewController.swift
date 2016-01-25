@@ -25,8 +25,7 @@ class LoginViewController: UIViewController {
                 if username != "" && password != "" {
         
                 LoginService.sharedInstance.loginWithCompletionHandler(username, password: password) { (error) -> Void in
-                    
-                    if ((error) != nil) {
+                    if ((error) != nil && (error! != "No Response")) {
                         
                         dispatch_async(dispatch_get_main_queue(), { () -> Void in
                             let alert = UIAlertController(title: "Why are you doing this to me?!?", message: error, preferredStyle: .Alert)

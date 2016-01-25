@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="9525" systemVersion="14F27" minimumToolsVersion="Xcode 7.0">
+    <entity name="CookingMethod" syncable="YES">
+        <attribute name="name" attributeType="String" syncable="YES"/>
+        <relationship name="mealBases" optional="YES" toMany="YES" deletionRule="Deny" destinationEntity="MealBase" inverseName="cookingMethod" inverseEntity="MealBase" syncable="YES"/>
+    </entity>
+    <entity name="Ingredient" syncable="YES">
+        <attribute name="name" attributeType="String" syncable="YES"/>
+        <relationship name="mealBases" optional="YES" toMany="YES" deletionRule="Deny" destinationEntity="MealBase" syncable="YES"/>
+    </entity>
+    <entity name="MealBase" syncable="YES">
+        <attribute name="name" attributeType="String" syncable="YES"/>
+        <relationship name="cookingMethod" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="CookingMethod" inverseName="mealBases" inverseEntity="CookingMethod" syncable="YES"/>
+        <relationship name="ingredients" optional="YES" toMany="YES" deletionRule="No Action" ordered="YES" destinationEntity="Ingredient" syncable="YES"/>
+    </entity>
+    <entity name="MealType" syncable="YES">
+        <attribute name="name" attributeType="String" syncable="YES"/>
+        <relationship name="meals" optional="YES" toMany="YES" deletionRule="Cascade" destinationEntity="PastMeal" inverseName="mealType" inverseEntity="PastMeal" syncable="YES"/>
+    </entity>
+    <entity name="PastMeal" syncable="YES">
+        <attribute name="count" attributeType="Integer 32" defaultValueString="0" syncable="YES"/>
+        <attribute name="name" attributeType="String" syncable="YES"/>
+        <relationship name="mealType" optional="YES" maxCount="1" deletionRule="No Action" destinationEntity="MealType" inverseName="meals" inverseEntity="MealType" syncable="YES"/>
+    </entity>
+    <entity name="Rating" syncable="YES">
+        <attribute name="date" attributeType="Date" syncable="YES"/>
+        <attribute name="rating" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="type" attributeType="String" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="CookingMethod" positionX="54" positionY="90" width="128" height="75"/>
+        <element name="Ingredient" positionX="45" positionY="81" width="128" height="75"/>
+        <element name="MealBase" positionX="36" positionY="72" width="128" height="90"/>
+        <element name="MealType" positionX="-63" positionY="0" width="128" height="75"/>
+        <element name="PastMeal" positionX="135" positionY="81" width="128" height="90"/>
+        <element name="Rating" positionX="36" positionY="72" width="128" height="90"/>
+    </elements>
+</model>
