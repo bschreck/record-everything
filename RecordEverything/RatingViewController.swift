@@ -8,7 +8,8 @@
 
 import Foundation
 import UIKit
-import CoreData
+import RealmSwift
+
 class RatingViewController: UIViewController  {
     
     
@@ -22,6 +23,7 @@ class RatingViewController: UIViewController  {
     @IBOutlet weak var datePicker: UIDatePicker!
     var unsavedRatings = [Rating]()
     var type: String
+    var realm = try! Realm()
     
     init(type: String) {
         self.type = type
@@ -35,6 +37,7 @@ class RatingViewController: UIViewController  {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        print("realm:",realm.path)
         
         
         loadUnsavedRatingsFromDisk()
@@ -46,12 +49,16 @@ class RatingViewController: UIViewController  {
 
     @IBAction func save(sender: AnyObject) {
         let date = Utils.roundDateToNearest10Min(datePicker.date)
-        let rating = Rating(rating: ratingControl.rating, date: date, type: self.type)!
+        let rating = Rating(value: ["id": Utils.newUUID(), "rating": ratingControl.rating, "date": date, "type": self.type])
+        print("after creating rating")
+        print(rating.id)
         let ratingsToSave = unsavedRatings + [rating]
+        print("ratings to save:",ratingsToSave)
         unsavedRatings = []
         clearRating()
         
-        for unsavedRating in ratingsToSave {
+        for (index,unsavedRating) in ratingsToSave.enumerate(){
+            print("saving rating:",unsavedRating.id)
             unsavedRating.saveToServer({
                 (responseObject:NSDictionary?, error:NSError?) in
                 if let _error = error {
@@ -59,13 +66,28 @@ class RatingViewController: UIViewController  {
                         print("Rating already exists")
                     } else {
                         print("unable to save rating (\(unsavedRating.rating),\(unsavedRating.date)) to server,",_error)
-                        self.unsavedRatings.append(unsavedRating)
-                        unsavedRating.saveToDisk()
+                        do {
+                            let realm = try Realm()
+                            try realm.write {
+                                realm.add(unsavedRating)
+                            }
+                        } catch let error as NSError{
+                            print("realm save error:",error)
+                        }
                     }
                 } else {
                     print(responseObject, error)
                     print("successfully saved to server")
-                    unsavedRating.removeFromDisk()
+                    if index < ratingsToSave.count-1 {
+                        do {
+                            let realm = try Realm()
+                            try realm.write {
+                                realm.delete(unsavedRating)
+                            }
+                        } catch let error as NSError{
+                            print("realm save error:",error)
+                        }
+                    }
                 }
             })
         }
@@ -92,52 +114,24 @@ class RatingViewController: UIViewController  {
         datePicker.date = Utils.roundDateToNearest10Min(NSDate())
     }
     
-    func loadUnsavedRatingsFromDisk() -> Bool {
-        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-        let managedContext = appDelegate.managedObjectContext
-        let fetchRequest = NSFetchRequest(entityName: "Rating")
-        var result = [NSManagedObject]()
-        
-        do {
-            result = try managedContext.executeFetchRequest(fetchRequest) as! [NSManagedObject]
-            
-        } catch let error as NSError {
-            print("Could not fetch \(error), \(error.userInfo)")
-            return false
+    func loadUnsavedRatingsFromDisk(){
+        unsavedRatings = []
+        let unsavedRatingsResult = realm.objects(Rating)
+        print("--->loading unsaved ratings")
+        for rating in unsavedRatingsResult {
+            print("loading rating:",rating)
+            unsavedRatings.append(rating)
         }
-        
-        if result.count > 0 {
-            for ratingItem in result {
-                let ratingObject = Rating(rating: ratingItem.valueForKey("rating") as! Int,date: ratingItem.valueForKey("date") as? NSDate,type:ratingItem.valueForKey("type") as! String)
-                print(ratingObject!.rating, ratingObject!.date, ratingObject!.type)
-                self.unsavedRatings.append(ratingObject!)
-            }
-        }
-        return true
     }
     
-    func removeAllRatingsFromDisk() -> Bool {
-        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-        let managedContext = appDelegate.managedObjectContext
-        let request = NSFetchRequest(entityName: "Rating")
+    func removeAllRatingsFromDisk() {
         do {
-            var ratingList = try managedContext.executeFetchRequest(request)
-            for rating in ratingList {
-                managedContext.deleteObject(rating as! NSManagedObject)
+            try realm.write {
+                realm.delete(realm.objects(BowelMovement))
             }
-            ratingList.removeAll(keepCapacity: false)
-        } catch let error as NSError {
-            print("could not retrieve past meals to delete:", error)
-            return false
+        } catch let error as NSError{
+            print("realm delete all error:",error)
         }
-        
-        do {
-            try managedContext.save()
-        } catch let error as NSError {
-            print("Could not save \(error), \(error.userInfo)")
-            return false
-        }
-        return true
     }
 
 }

@@ -40,7 +40,7 @@ class RatingControl: UIView {
             
             button.adjustsImageWhenHighlighted = false
             
-            button.addTarget(self, action: "ratingButtonTapped:", forControlEvents: .TouchDown)
+            button.addTarget(self, action: #selector(RatingControl.ratingButtonTapped(_:)), forControlEvents: .TouchDown)
             ratingButtons += [button]
             addSubview(button)
         }

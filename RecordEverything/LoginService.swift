@@ -2,6 +2,7 @@ import Foundation
 import UIKit
 import Alamofire
 import SwiftyJSON
+import RealmSwift
 
 public class LoginService : NSObject {
     
@@ -193,8 +194,125 @@ public class LoginService : NSObject {
 //        
 //    }
     
-    
+    func setDefaultRealmForUser(username: String) {
+        var config = Realm.Configuration(
+            // Set the new schema version. This must be greater than the previously used
+            // version (if you've never set a schema version before, the version is 0).
+            schemaVersion: 2,
+            
+            // Set the block which will be called automatically when opening a Realm with
+            // a schema version lower than the one set above
+            migrationBlock: { migration, oldSchemaVersion in
+                print("old schema version:", oldSchemaVersion)
+                // We haven’t migrated anything yet, so oldSchemaVersion == 0
+                if (oldSchemaVersion < 1) {
+                    print("migrating \(oldSchemaVersion) to 1")
+                    migration.enumerate(Meal.className()) { oldObject, newObject in
+                        newObject!["cookingMethodAdditions"] = []
+                        newObject!["cookingMethodRemovals"] = []
+                        newObject!["ingredientAdditions"] = []
+                        newObject!["ingredientRemovals"] = []
+                    }
+                } else if (oldSchemaVersion < 2) {
+                    print("migrating \(oldSchemaVersion) to 2")
+                    migration.enumerate(BowelMovement.className()) { oldObject, newObject in
+                        newObject!["duration"] = 0
+                    }
+                }
+            }
+        )
+        // Use the default directory, but replace the filename with the username
+        config.path = NSURL.fileURLWithPath(config.path!)
+            .URLByDeletingLastPathComponent?
+            .URLByAppendingPathComponent("\(username).realm")
+            .path
+        
+        // Tell Realm to use this new configuration object for the default Realm
+        Realm.Configuration.defaultConfiguration = config
+        
+
+        // Now that we've told Realm how to handle the schema change, opening the file
+        // will automatically perform the migration
+        var realm: Realm?
+        realm = try! Realm()
+        
+        let usedDiskSpace = fileSize(config.path!)
+        print("used disk space:",usedDiskSpace)
+        if usedDiskSpace > 200000000 {
+            
+            let tmp_path = self.compactRLM(realm!, path: config.path!)
+            if let tmp_path = tmp_path {
+                print("new file size:",fileSize(tmp_path))
+                realm = nil
+                let filemgr = NSFileManager.defaultManager()
+                let tmp_path_for_orig = NSURL.fileURLWithPath(config.path!)
+                    .URLByDeletingLastPathComponent?
+                    .URLByAppendingPathComponent("\(username)_orig_tmp.realm")
+                    .path
+                
+
+                do {
+                    try filemgr.moveItemAtPath(config.path!, toPath: tmp_path_for_orig!)
+                } catch let error as NSError {
+                    print("error moving orig realm file:",error)
+                    return
+                }
+                do {
+                    try filemgr.moveItemAtPath(tmp_path, toPath: config.path!)
+                } catch let error as NSError {
+                    print("error moving new realm file",error)
+                    do {
+                        try filemgr.moveItemAtPath(tmp_path_for_orig!, toPath: config.path!)
+                    } catch let error2 as NSError {
+                        print("error backing up orig realm file",error2)
+                    }
+                }
+                do {
+                    try filemgr.removeItemAtPath(tmp_path_for_orig!)
+                } catch let error as NSError {
+                    print("error deleting orig realm file",error)
+                }
+                realm = try! Realm()
+            }
+        }
+
+    }
     // MARK: Private Methods
+    private func compactRLM(rlm: Realm, path: String) -> String?{
+        let tmp_path = NSURL.fileURLWithPath(path)
+            .URLByDeletingLastPathComponent?
+            .URLByAppendingPathComponent("\(username!)_tmp_rlm.realm")
+            .path
+        let filemgr = NSFileManager.defaultManager()
+        do {
+            try filemgr.removeItemAtPath(tmp_path!)
+        } catch let error as NSError {
+            print("error deleting orig realm file",error)
+        }
+        do {
+            try rlm.writeCopyToPath(tmp_path!)
+
+        } catch let error as NSError {
+            print("error writing copy",error)
+            return nil
+        }
+        return tmp_path!
+        
+    }
+    private func fileSize(path: String) -> UInt64 {
+        var fileSize : UInt64 = 0
+        
+        do {
+            let attr : NSDictionary? = try NSFileManager.defaultManager().attributesOfItemAtPath(path)
+            
+            if let _attr = attr {
+                fileSize = _attr.fileSize();
+            }
+        } catch {
+            print("Error: \(error)")
+        }
+        return fileSize
+    }
     
     private func loginOrSignup(username: String, password: String, signup: Bool, completionHandler: ((error: String?) -> Void)!) -> () {
         self.username = username
@@ -205,18 +323,22 @@ public class LoginService : NSObject {
         }
         
         let url = AppConstants.apiURLWithPathComponents(path)
+        print("url:",url)
         let request = NSMutableURLRequest(URL: url)
         request.HTTPMethod = "POST"
-//        let params =  "client_id=\(AppConstants.clientId)"
-//        request.HTTPBody = params.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: false)
+
         request.addValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
         request.setAuthorizationHeader()
+        
 
-        Alamofire.request(request).responseString { response in
+        let alamofireManager = NetworkManager().manager!
+        print("request:",request)
+        alamofireManager.request(request).responseString { response in
+            print("response:",response)
             var statusCode: Int
             if let httpError = response.result.error {
                 statusCode = httpError.code
-                print("Status Code:",statusCode)
+                print("Status Code (error):",statusCode)
             } else { //no errors
                 statusCode = (response.response?.statusCode)!
                 print("Status Code:", statusCode)
@@ -225,7 +347,7 @@ public class LoginService : NSObject {
             switch statusCode {
             case 200:
                 completionHandler(error: nil)
-            case -1004,-1002:
+            case -1009,-1004,-1002,-1001,-999:
                 completionHandler(error: "No Response")
             default:
                 if let error = response.result.value {
@@ -234,6 +356,7 @@ public class LoginService : NSObject {
                     completionHandler(error: "Unknown Error")
                 }
             }
+            alamofireManager.session.invalidateAndCancel()
         }
     }
     

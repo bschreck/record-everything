@@ -10,6 +10,7 @@ import Foundation
 
 import UIKit
 class LoginViewController: UIViewController {
+    //TODO: FIGURE OUT LOGIC FOR WHEN CAN'T ACCESS SERVER (one thing to do is to save username and password last used)
     @IBOutlet weak var loginTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var loginButton: UIButton!
@@ -26,14 +27,17 @@ class LoginViewController: UIViewController {
         
                 LoginService.sharedInstance.loginWithCompletionHandler(username, password: password) { (error) -> Void in
                     if ((error) != nil && (error! != "No Response")) {
-                        
+                        print(error)
                         dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                            let alert = UIAlertController(title: "Why are you doing this to me?!?", message: error, preferredStyle: .Alert)
-                            alert.addAction(UIAlertAction(title: "Click", style: UIAlertActionStyle.Default, handler: nil))
+                            let alert = UIAlertController(title: "User or password not found", message: error, preferredStyle: .Alert)
+                            alert.addAction(UIAlertAction(title: "Okay", style: UIAlertActionStyle.Default, handler: nil))
                             self.presentViewController(alert, animated: true, completion: nil)
                         })
                         
                     } else {
+                        LoginService.sharedInstance.setDefaultRealmForUser(username)
+                        //TODO: redo notifications
+                       //Notification.scheduleNotifications()
                         
                         dispatch_async(dispatch_get_main_queue(), { () -> Void in
                             let controllerId = LoginService.sharedInstance.isLoggedIn() ? "Main" : "Login";

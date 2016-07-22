@@ -1,137 +1,80 @@
 //
 //  Rating.swift
-//  FoodTracker
+//  RecordEverything
 //
-//  Created by Benjamin Schreck on 1/10/16.
-//
+//  Created by Benjamin Schreck on 1/28/16.
+//  Copyright © 2016 Benjamin Schreck. All rights reserved.
 //
 
-
-import ObjectMapper
-import UIKit
 import Foundation
+import ObjectMapper
+import RealmSwift
 import Alamofire
-import CoreData
 
-class Rating: NSObject, Mappable {
-    // MARK: Properties
-    
-    //TODO: move unsaved to core data instead of files
-    
-    var rating: Int
-    var date: NSDate
-    var type: String
-    
-    
-    var ratingRoute: NSURL {
+class Rating: Object, Mappable {
+    dynamic var id :String? = ""
+    dynamic var jsonId: String? {
+        get {
+            return id
+        }
+        set(jsonIdString) {
+        }
+    }
+    dynamic var rating: Int = 0
+    dynamic var date = NSDate(timeIntervalSince1970: 1)
+    dynamic var type: String = ""
+    dynamic var ratingRoute: NSURL {
         get {
             return AppConstants.apiURLWithPathComponents("\(type)")
         }
     }
-    var ratingsRoute: NSURL {
+    dynamic var ratingsRoute: NSURL {
         get {
-            return AppConstants.apiURLWithPathComponents("\(type)s")
+            let index = type.endIndex.advancedBy(-1)
+            if type[index] == "s" {
+                return AppConstants.apiURLWithPathComponents("\(type)es")
+            } else {
+                return AppConstants.apiURLWithPathComponents("\(type)s")
+            }
         }
     }
     
-    
-    // MARK: Initialization
-    
-    required init?(_ map: Map) {
-        self.rating = 0
-        self.date = NSDate()
-        self.type = ""
-    }
-    
-    required init?(rating: Int, date: NSDate?, type: String) {
-        self.rating = rating
-        if let unwrappedDate = date {
-            self.date = unwrappedDate
-        } else {
-            self.date = NSDate()
-        }
-        self.type = type
-        super.init()
-        // Initialization should fail if there is no name or if the rating is negative.n
-        if rating < 0 {
-            return nil
-        }
+    required convenience init?(_ map: Map) {
+        self.init()
     }
     
     func mapping(map: Map) {
-        type <-  map["type"]
-        rating <-  map["rating"]
-        date   <- (map["date"], OptionalDateTransform())
-    }
-    
-    
-
-    func saveToDisk() -> Bool {
-        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-        let managedContext = appDelegate.managedObjectContext
-    
-        
-        
-        let fetchRequest = NSFetchRequest(entityName: "Rating")
-        fetchRequest.predicate = NSPredicate(format:"date = %@ AND type = %@", date,type)
-        print(fetchRequest.predicate)
-        fetchRequest.fetchLimit = 1
-        var result = [NSManagedObject]()
         do {
-            result = try managedContext.executeFetchRequest(fetchRequest) as! [NSManagedObject]
-            
-        } catch let error as NSError {
-            print("Could not fetch \(error), \(error.userInfo)")
-        }
-        if result.count == 0 {
-            let entity =  NSEntityDescription.entityForName("Rating", inManagedObjectContext:managedContext)
-            let ratingObject = NSManagedObject(entity: entity!, insertIntoManagedObjectContext: managedContext)
-            ratingObject.setValue(self.rating, forKey: "rating")
-            ratingObject.setValue(self.date, forKey:"date")
-            ratingObject.setValue(self.type, forKey:"type")
-            
-            do {
-                try managedContext.save()
-            } catch let error as NSError {
-                print("Could not save \(error), \(error.userInfo)")
-                return false
+            let realm = try Realm()
+            try realm.write{
+                jsonId <- map["jsonId"]
+                if id == nil {
+                    id = jsonId!
+                }
+                type <-  map["type"]
+                rating <-  map["rating"]
+                date   <- (map["date"], OptionalDateTransform())
             }
-        } else {
-            print("object exists")
+        } catch let error as NSError {
+            print("realm write error:",error)
         }
-        return true
     }
+// Specify properties to ignore (Realm won't persist these)
     
-    func removeFromDisk() -> Bool {
-        let appDelegate = UIApplication.sharedApplication().delegate as! AppDelegate
-        let managedContext = appDelegate.managedObjectContext
+//  override static func ignoredProperties() -> [String] {
+//    return []
+//  }
 
-        let fetchRequest = NSFetchRequest(entityName: "Rating")
-        fetchRequest.predicate = NSPredicate(format:"date = %@ && type = %@", date,type)
-        fetchRequest.fetchLimit = 1
-        do {
-            var ratingList = try managedContext.executeFetchRequest(fetchRequest)
-            for rating in ratingList {
-                managedContext.deleteObject(rating as! NSManagedObject)
-            }
-            ratingList.removeAll(keepCapacity: false)
-        } catch let error as NSError {
-            print("could not retrieve rating to delete:", error)
-            return false
-        }
-        
-        do {
-            try managedContext.save()
-        } catch let error as NSError {
-            print("Could not save \(error), \(error.userInfo)")
-            return false
-        }
-        return true
+    override static func primaryKey() -> String? {
+        return "id"
     }
-    
-    
+
     func saveToServer(onCompletion: ServiceResponse) {
-        let serializedRating = Mapper().toJSONString(self, prettyPrint: true)
+        var serializedRating: String?
+        
+        serializedRating = Mapper().toJSONString(self, prettyPrint: true)
+        
+
         let data = serializedRating!.dataUsingEncoding(NSUTF8StringEncoding)!
         
         let mutableURLRequest = NSMutableURLRequest(URL: ratingsRoute)
@@ -140,7 +83,6 @@ class Rating: NSObject, Mappable {
         mutableURLRequest.HTTPBody = data
         mutableURLRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
         mutableURLRequest.setAuthorizationHeader()
-        
         
         Alamofire.request(mutableURLRequest).responseString { response in
             var statusCode: Int
@@ -166,5 +108,4 @@ class Rating: NSObject, Mappable {
             }
         }
     }
-    
 }

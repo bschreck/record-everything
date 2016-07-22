@@ -11,8 +11,8 @@ import UIKit
 import CoreData
 import Alamofire
 import SwiftyJSON
+import RealmSwift
 
-//TODO: autocomplete ingredients
 let NAME_TEXT_FIELD_TAG = 0
 let INGREDIENT_TEXT_FIELD_TAG = 1
 
@@ -20,23 +20,27 @@ class CreateMealBaseViewController: UIViewController, UITextFieldDelegate, UITab
     
     var mealBase: MealBase?
     var unsavedMealBases = [MealBase]()
-    var cookingMethod = "Bake" {
+    var cookingMethods = [String]() {
         didSet {
-            updateCookingMethodButton()
+            updateCookingMethodLabel()
         }
     }
+    var cookingMethodString = ""
     var ingredients = [String]() {
         didSet {
             doTableRefresh()
         }
     }
     var editingRow: NSIndexPath?
+    var realm = try! Realm()
     
     @IBOutlet weak var nameTextField: UITextField!
     @IBOutlet weak var ingredientTextField: UITextField!
     
 
-    @IBOutlet weak var cookingMethodButton: UIButton!
+    @IBOutlet weak var cookingMethodAddButton: UIButton!
+
+    @IBOutlet weak var cookingMethodLabel: UILabel!
     @IBOutlet weak var saveButton: UIBarButtonItem!
     //@IBOutlet weak var saveButton: UIBarButtonItem!
     @IBOutlet weak var ingredientsTableView: UITableView!
@@ -53,7 +57,7 @@ class CreateMealBaseViewController: UIViewController, UITextFieldDelegate, UITab
         ingredientsTableView.delegate = self
         ingredientsTableView.dataSource = self
         ingredientsTableView.scrollEnabled = true
-        updateCookingMethodButton()
+        cookingMethods = [String]()
         self.view.addSubview(ingredientsTableView)
         
         loadUnsavedMealBasesFromDisk()
@@ -62,8 +66,15 @@ class CreateMealBaseViewController: UIViewController, UITextFieldDelegate, UITab
         if let mealBase = mealBase {
             navigationItem.title = mealBase.name
             nameTextField.text = mealBase.name
-            cookingMethod = mealBase.cookingMethod[0]
-            ingredients = mealBase.ingredients
+            
+            var _cookingMethods = [String]()
+            for cm in mealBase.cookingMethods {
+                _cookingMethods.append(cm.name)
+            }
+            cookingMethods = _cookingMethods
+            for ing in mealBase.ingredients {
+                ingredients.append(ing.name)
+            }
         }
         
         // Enable the Save button only if the text field has a valid Meal name.
@@ -72,14 +83,31 @@ class CreateMealBaseViewController: UIViewController, UITextFieldDelegate, UITab
 
     
     
-    @IBAction func selectCookingMethod(sender: UIStoryboardSegue) {
-        if let cookingMethodViewController = sender.sourceViewController as? CookingMethodViewController {
-            cookingMethod = cookingMethodViewController.cookingMethod
+    @IBAction func selectCookingMethod(sender: AnyObject) {
+        let VC1 = self.storyboard!.instantiateViewControllerWithIdentifier("SelectCookingMethod") as! CookingMethodViewController
+        
+        VC1.callback = addCookingMethod
+        self.presentViewController(VC1, animated:true, completion: nil)
+    }
+    func addCookingMethod(newCM: String) {
+        if !cookingMethods.contains(newCM) {
+            cookingMethods.append(newCM)
         }
     }
-    
-    func updateCookingMethodButton() {
-        cookingMethodButton.setTitle(cookingMethod, forState:.Normal)
+
+    @IBAction func removeLastCookingMethod(sender: AnyObject) {
+        cookingMethods.removeLast()
+    }
+    func updateCookingMethodLabel() {
+        cookingMethodString = ""
+        for (i, cm) in cookingMethods.enumerate() {
+            if cookingMethods.count > 1 && i < cookingMethods.count - 1 {
+                cookingMethodString += "\(cm), "
+            } else {
+                cookingMethodString += cm
+            }
+        }
+        cookingMethodLabel.text = cookingMethodString
     }
 
     func loadUnsavedMealBasesFromDisk() {
@@ -125,6 +153,7 @@ class CreateMealBaseViewController: UIViewController, UITextFieldDelegate, UITab
             ingredients.append(ingredientTextField.text!)
         }
         ingredientTextField.text = ""
+        
     }
     
     
@@ -160,41 +189,130 @@ class CreateMealBaseViewController: UIViewController, UITextFieldDelegate, UITab
     // MARK: Navigation
     
     func clearMealBase() {
-        mealBase = nil
+        if let _ = mealBase {
+            self.mealBase = nil
+        }
         navigationItem.title = "New Type of Food"
         nameTextField.text = ""
     }
 
     @IBAction func cancel(sender: UIBarButtonItem) {
-        print("presenting view controller:", presentingViewController)
         let isPresentingInAddMealMode = presentingViewController is UINavigationController
         if isPresentingInAddMealMode {
-            dismissViewControllerAnimated(true, completion: nil)
+            Utils.dismissViewControllerAnimatedOnMainThread(self)
         } else {
             navigationController!.popViewControllerAnimated(true)
         }
     }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        print("preparing for segue")
-        if saveButton === sender,let tableViewController = segue.destinationViewController as? MealBaseTableViewController {
-            print("savebutton sender")
-            let name = nameTextField.text ?? ""
-            mealBase = MealBase(name:name,ingredients:ingredients,cookingMethod:[cookingMethod])
-            if let mealBase = mealBase {
-                mealBase.saveToDisk()
-                mealBase.saveToServer(){response,error in
-                    if let _ = error {
-                        tableViewController.unsavedMealBases.addObject(self.editingRow!)
-                    }
+    func getRealmIngredients(mealBase: MealBase) -> [Ingredient] {
+        var realmIngredients = [Ingredient]()
+        let existingIngredients = mealBase.ingredients
+        var found: Bool
+        for ing in ingredients {
+            found = false
+            for ex in existingIngredients {
+                if ing == ex.name {
+                    realmIngredients.append(ex)
+                    found = true
+                    break
                 }
             }
+            if !found {
+                let ingObject = Ingredient(value:["name":ing])
+                realmIngredients.append(ingObject)
+            }
+        }
+        return realmIngredients
+    }
+    
+    func getRealmCookingMethods(mealBase: MealBase) -> [CookingMethod] {
+        var realmCookingMethods = [CookingMethod]()
+        let existingCookingMethods = mealBase.cookingMethods
+        var found: Bool
+        for cm in cookingMethods {
+            found = false
+            for ex in existingCookingMethods {
+                if cm == ex.name {
+                    realmCookingMethods.append(ex)
+                    found = true
+                    break
+                }
+            }
+            if !found {
+                let cmObject = CookingMethod(value:["name":cm])
+                realmCookingMethods.append(cmObject)
+            }
+        }
+        return realmCookingMethods
+    }
+    
+    override func shouldPerformSegueWithIdentifier(identifier: String?, sender: AnyObject?) -> Bool {
+        if let ident = identifier {
+            if ident == "saveMealBaseIdentifier" {
+                if ingredients.count == 0 {
+                    showAlertWithMessage("You cannot save a new type of meal with no ingredients", title:"Error: No Ingredients")
+                    return false
+                } else if cookingMethods.count == 0 {
+                    showAlertWithMessage("You cannot save a new type of meal with no cooking methods", title:"Error: No Cooking Methods")
+                    return false
+                }
+            }
+        }
+        return true
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if saveButton === sender {
+
+            let name = nameTextField.text ?? ""
+            if let mealBase = mealBase {
+                
+                let realmIngredients = getRealmIngredients(mealBase)
+                let realmCookingMethods = getRealmCookingMethods(mealBase)
+                
+                do {
+                    try realm.write {
+                        mealBase.name = name
+                        mealBase.ingredients.removeAll()
+                        mealBase.ingredients.appendContentsOf(realmIngredients)
+                        mealBase.cookingMethods.removeAll()
+                        mealBase.cookingMethods.appendContentsOf(realmCookingMethods)
+                    }
+                } catch let error as NSError {
+                    print("error saving mealbase edits:",error)
+                }
+                print("new mealbase:",mealBase)
+            } else {
+                var ingredientDict: [[String:String]] = []
+                for ing in ingredients{
+                    ingredientDict.append(["name":ing])
+                }
+                var cmDict: [[String:String]] = []
+                for cm in cookingMethods{
+                    cmDict.append(["name":cm])
+                }
+                mealBase = MealBase(value: ["id": Utils.newUUID(), "name":name,"ingredients":ingredientDict,"cookingMethods":cmDict])
+            }
+
         }
     }
     func doTableRefresh(){
         dispatch_async(dispatch_get_main_queue(), {
             self.ingredientsTableView.reloadData()
             return
+        })
+    }
+    
+    func showAlertWithMessage(message:String, title:String?) {
+        var _title = title
+        if _title == nil {
+            _title = "Alert"
+        }
+        let alert = UIAlertController(title: _title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
+        alert.addAction(UIAlertAction(title: "Okay", style: UIAlertActionStyle.Default, handler: nil))
+        dispatch_async(dispatch_get_main_queue(), {
+            self.presentViewController(alert, animated: true, completion: nil)
         })
     }
     

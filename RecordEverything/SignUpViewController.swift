@@ -27,14 +27,17 @@ class SignUpViewController: UIViewController {
                     if ((error) != nil) {
                         
                         dispatch_async(dispatch_get_main_queue(), { () -> Void in
-                            let alert = UIAlertController(title: "Why are you doing this to me?!?", message: error, preferredStyle: .Alert)
-                            alert.addAction(UIAlertAction(title: "Click", style: UIAlertActionStyle.Default, handler: nil))
+                            let alert = UIAlertController(title: "Sign up error", message: error, preferredStyle: .Alert)
+                            alert.addAction(UIAlertAction(title: "Okay", style: UIAlertActionStyle.Default, handler: nil))
                             self.presentViewController(alert, animated: true, completion: nil)
                         })
                         
                     } else {
-                        
+                        LoginService.sharedInstance.setDefaultRealmForUser(username)
+                        Notification.scheduleNotifications()
+
                         dispatch_async(dispatch_get_main_queue(), { () -> Void in
+                            
                             let controllerId = LoginService.sharedInstance.isLoggedIn() ? "Main" : "SignUp";
                             
                             let storyboard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)

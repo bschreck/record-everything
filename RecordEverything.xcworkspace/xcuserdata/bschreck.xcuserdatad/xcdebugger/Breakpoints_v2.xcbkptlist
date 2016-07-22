@@ -1,0 +1,395 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bucket
+   type = "0"
+   version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "RecordEverything/MealBaseTableViewController.swift"
+            timestampString = "488156696.360661"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "186"
+            endingLineNumber = "186"
+            landmarkName = "saveMealBaseToDisk(withObject:shouldSave:shouldDelete:)"
+            landmarkType = "5">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "RecordEverything.MealBaseTableViewController.saveMealBaseToDisk (RecordEverything.MealBaseTableViewController)(withObject : RecordEverything.MealBase, shouldSave : Swift.Bool, shouldDelete : Swift.Bool) -&gt; Swift.Bool"
+                  moduleName = "RecordEverything"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/bschreck/RecordEverything/RecordEverything/MealBaseTableViewController.swift"
+                  timestampString = "475890560.172028"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "182"
+                  endingLineNumber = "182"
+                  offsetFromSymbolStart = "421">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "RecordEverything.MealBaseTableViewController.(saveMealBaseToDisk (RecordEverything.MealBaseTableViewController) -&gt; (withObject : RecordEverything.MealBase, shouldSave : Swift.Bool, shouldDelete : Swift.Bool) -&gt; Swift.Bool).(closure #1)"
+                  moduleName = "RecordEverything"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/bschreck/RecordEverything/RecordEverything/MealBaseTableViewController.swift"
+                  timestampString = "475890560.172302"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "182"
+                  endingLineNumber = "182"
+                  offsetFromSymbolStart = "363">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "RecordEverything/MealBaseTableViewController.swift"
+            timestampString = "488156696.360661"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "187"
+            endingLineNumber = "187"
+            landmarkName = "saveMealBaseToDisk(withObject:shouldSave:shouldDelete:)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "RecordEverything/ModifyCookingMethodsTableViewController.swift"
+            timestampString = "478897177.96883"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "22"
+            endingLineNumber = "22"
+            landmarkName = "viewDidLoad()"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "RecordEverything/ModifyCookingMethodsTableViewController.swift"
+            timestampString = "478897291.995191"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "28"
+            endingLineNumber = "28"
+            landmarkName = "viewDidLoad()"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "RecordEverything/ModifyIngredientsTableViewController.swift"
+            timestampString = "478897323.57076"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "49"
+            endingLineNumber = "49"
+            landmarkName = "tableView(_:cellForRowAtIndexPath:)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "RecordEverything/ModifyCookingMethodTableViewCell.swift"
+            timestampString = "478897466.442619"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "16"
+            endingLineNumber = "16"
+            landmarkName = "awakeFromNib()"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "RecordEverything/AddCookingMethodTableViewCell.swift"
+            timestampString = "478897470.175999"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "17"
+            endingLineNumber = "17"
+            landmarkName = "awakeFromNib()"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.ExceptionBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            scope = "0"
+            stopOnStyle = "0">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "RecordEverything/ModifyCookingMethodTableViewCell.swift"
+            timestampString = "478903075.743968"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "15"
+            endingLineNumber = "15"
+            landmarkName = "ModifyCookingMethodTableViewCell"
+            landmarkType = "3">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "RecordEverything.ModifyCookingMethodTableViewCell.textLabelNew.getter : weak Swift.ImplicitlyUnwrappedOptional&lt;__ObjC.UILabel&gt;"
+                  moduleName = "RecordEverything"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/bschreck/RecordEverything/RecordEverything/ModifyCookingMethodTableViewCell.swift"
+                  timestampString = "478903163.166239"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0"
+                  offsetFromSymbolStart = "12">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "RecordEverything.ModifyCookingMethodTableViewCell.textLabelNew.setter : weak Swift.ImplicitlyUnwrappedOptional&lt;__ObjC.UILabel&gt;"
+                  moduleName = "RecordEverything"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/bschreck/RecordEverything/RecordEverything/ModifyCookingMethodTableViewCell.swift"
+                  timestampString = "478903163.166408"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0"
+                  offsetFromSymbolStart = "16">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "RecordEverything.ModifyCookingMethodTableViewCell.textLabelNew.materializeForSet : weak Swift.ImplicitlyUnwrappedOptional&lt;__ObjC.UILabel&gt;"
+                  moduleName = "RecordEverything"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/bschreck/RecordEverything/RecordEverything/ModifyCookingMethodTableViewCell.swift"
+                  timestampString = "478903163.166581"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0"
+                  offsetFromSymbolStart = "16">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "RecordEverything.ModifyCookingMethodTableViewCell.init (RecordEverything.ModifyCookingMethodTableViewCell.Type)(style : __C.UITableViewCellStyle, reuseIdentifier : Swift.Optional&lt;Swift.String&gt;) -&gt; RecordEverything.ModifyCookingMethodTableViewCell"
+                  moduleName = "RecordEverything"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/bschreck/RecordEverything/RecordEverything/ModifyCookingMethodTableViewCell.swift"
+                  timestampString = "478903163.16675"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "15"
+                  endingLineNumber = "15"
+                  offsetFromSymbolStart = "146">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "RecordEverything.ModifyCookingMethodTableViewCell.init (RecordEverything.ModifyCookingMethodTableViewCell.Type)(coder : __ObjC.NSCoder) -&gt; Swift.Optional&lt;RecordEverything.ModifyCookingMethodTableViewCell&gt;"
+                  moduleName = "RecordEverything"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/bschreck/RecordEverything/RecordEverything/ModifyCookingMethodTableViewCell.swift"
+                  timestampString = "478903163.166913"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "15"
+                  endingLineNumber = "15"
+                  offsetFromSymbolStart = "88">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "RecordEverything/ModifyCookingMethodTableViewCell.swift"
+            timestampString = "478903077.433909"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "14"
+            endingLineNumber = "14"
+            landmarkName = "ModifyCookingMethodTableViewCell"
+            landmarkType = "3">
+            <Locations>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "RecordEverything.ModifyCookingMethodTableViewCell.tableView.getter : weak Swift.Optional&lt;RecordEverything.ModifyCookingMethodsTableViewController&gt;"
+                  moduleName = "RecordEverything"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/bschreck/RecordEverything/RecordEverything/ModifyCookingMethodTableViewCell.swift"
+                  timestampString = "478903163.168766"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0"
+                  offsetFromSymbolStart = "12">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "RecordEverything.ModifyCookingMethodTableViewCell.tableView.setter : weak Swift.Optional&lt;RecordEverything.ModifyCookingMethodsTableViewController&gt;"
+                  moduleName = "RecordEverything"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/bschreck/RecordEverything/RecordEverything/ModifyCookingMethodTableViewCell.swift"
+                  timestampString = "478903163.168943"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0"
+                  offsetFromSymbolStart = "16">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "RecordEverything.ModifyCookingMethodTableViewCell.tableView.materializeForSet : weak Swift.Optional&lt;RecordEverything.ModifyCookingMethodsTableViewController&gt;"
+                  moduleName = "RecordEverything"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/bschreck/RecordEverything/RecordEverything/ModifyCookingMethodTableViewCell.swift"
+                  timestampString = "478903163.169106"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0"
+                  offsetFromSymbolStart = "16">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "RecordEverything.ModifyCookingMethodTableViewCell.init (RecordEverything.ModifyCookingMethodTableViewCell.Type)(style : __C.UITableViewCellStyle, reuseIdentifier : Swift.Optional&lt;Swift.String&gt;) -&gt; RecordEverything.ModifyCookingMethodTableViewCell"
+                  moduleName = "RecordEverything"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/bschreck/RecordEverything/RecordEverything/ModifyCookingMethodTableViewCell.swift"
+                  timestampString = "478903163.169278"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "14"
+                  endingLineNumber = "14"
+                  offsetFromSymbolStart = "58">
+               </Location>
+               <Location
+                  shouldBeEnabled = "No"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "RecordEverything.ModifyCookingMethodTableViewCell.init (RecordEverything.ModifyCookingMethodTableViewCell.Type)(coder : __ObjC.NSCoder) -&gt; Swift.Optional&lt;RecordEverything.ModifyCookingMethodTableViewCell&gt;"
+                  moduleName = "RecordEverything"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/bschreck/RecordEverything/RecordEverything/ModifyCookingMethodTableViewCell.swift"
+                  timestampString = "478903163.16944"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "14"
+                  endingLineNumber = "14"
+                  offsetFromSymbolStart = "19">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "RecordEverything/AddCookingMethodTableViewCell.swift"
+            timestampString = "478903315.532678"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "29"
+            endingLineNumber = "29"
+            landmarkName = "addCookingMethod(_:)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "RecordEverything/RecordMealViewController.swift"
+            timestampString = "482087859.179355"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "104"
+            endingLineNumber = "104"
+            landmarkName = "setMealVariable(_:)"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "RecordEverything/RecordMealViewController.swift"
+            timestampString = "482088660.523544"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "352"
+            endingLineNumber = "352"
+            landmarkName = "viewDidLoad()"
+            landmarkType = "5">
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
+</Bucket>

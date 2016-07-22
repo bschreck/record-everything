@@ -1,6 +1,52 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Workspace
    version = "1.0">
+   <Group
+      location = "container:"
+      name = "DataModelClasses">
+      <FileRef
+         location = "group:PastMeal+CoreDataProperties.swift">
+      </FileRef>
+      <FileRef
+         location = "group:PastMeal.swift">
+      </FileRef>
+      <FileRef
+         location = "group:Rating+CoreDataProperties.swift">
+      </FileRef>
+      <FileRef
+         location = "group:Rating.swift">
+      </FileRef>
+      <FileRef
+         location = "group:Meal+CoreDataProperties.swift">
+      </FileRef>
+      <FileRef
+         location = "group:Meal.swift">
+      </FileRef>
+      <FileRef
+         location = "group:MealType+CoreDataProperties.swift">
+      </FileRef>
+      <FileRef
+         location = "group:MealType.swift">
+      </FileRef>
+      <FileRef
+         location = "group:Ingredient+CoreDataProperties.swift">
+      </FileRef>
+      <FileRef
+         location = "group:Ingredient.swift">
+      </FileRef>
+      <FileRef
+         location = "group:CookingMethod+CoreDataProperties.swift">
+      </FileRef>
+      <FileRef
+         location = "group:CookingMethod.swift">
+      </FileRef>
+      <FileRef
+         location = "group:MealBase+CoreDataProperties.swift">
+      </FileRef>
+      <FileRef
+         location = "group:MealBase.swift">
+      </FileRef>
+   </Group>
    <FileRef
       location = "group:RecordEverything.xcodeproj">
    </FileRef>

@@ -9,13 +9,17 @@
 import Foundation
 
 public struct AppConstants {
-    static let DocumentsDirectory = NSFileManager().URLsForDirectory(.DocumentDirectory, inDomains: .UserDomainMask).first!
     static var clientId = "hO4ZJSawqTXeDz0S7ZKAX0FD"
     static var clientSecret = "jmfB2ohtigTpo47f8BJmZIvP"
     static var apiBaseUrl = "http://localhost:8080/api/"
-    //static var apiBaseUrl = "http://alfad8.csail.mit.edu:8080/api"
+    //static var apiBaseUrl =  "http://ec2-54-213-229-13.us-west-2.compute.amazonaws.com/api/"
     
-    static let mealBasesRoute = "meal_bases"
+    static let mealBaseRoute = "meal_base"
+    static let mealRoute = "meal"
+    
+    static var visitedRecordMealViewController = false
+    static var visitedMealBaseTableViewController = false
+
     
     public static func apiURLWithPathComponents(components: String) -> NSURL {
         let baseUrl = NSURL(string: AppConstants.apiBaseUrl)
